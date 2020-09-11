@@ -54,8 +54,13 @@ app.use('/admin', adminRoute)
 app.use('/user', userRoute)
 
 app.get('/', async (req, res) => {
+    try {
     const projects = await projectModel.find()
     res.render('index', { projects })
+    } catch (e) {
+        console.log(e)
+    }
+ 
 })
 
 const emailValidate = [
