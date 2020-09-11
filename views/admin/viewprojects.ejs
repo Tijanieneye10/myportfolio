@@ -1,0 +1,97 @@
+<%- include('includes/header')  %>
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <%- include('includes/navbar') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('includes/sidebar') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Projects</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">View Projects</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card card-primary card-outline">
+
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-condensed table-dark table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>TITLE</th>
+                                            <th>IMAGE</th>
+                                            <th>DELETE</th>
+                                            <th>UPDATE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% if(projects) { %>
+                                    <% projects.forEach(function(project){ %>
+                                        <tr>
+                                            <td scope="row"><%= i++ %></td>
+                                            <td><%- project.title %></td>
+                                            <td><img src="/uploads/<%- project.image%>" alt="" height="80rem" width="100rem"></td>
+                                            <td><form class="inline" action="/admin/delete/<%= project._id %>" method="post"><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button></form></td>
+                                            <td>
+                                                <a href="/admin/editproject/<%= project._id %>" class="btn btn-info"><i
+                                                        class="fa fa-edit"></i></a>
+                                            </td>
+                                      
+                                        </tr>
+                                    <% }) %>
+                                    <% } %>
+                                  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <%- include('includes/main-footer') %>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <%- include('includes/footer')   %>
