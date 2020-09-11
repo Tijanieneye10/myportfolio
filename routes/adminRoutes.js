@@ -65,25 +65,36 @@ router.post('/', authMiddleware, validateProject, async (req, res) => {
 })
 
 // Let loop out all the projects
-router.get('/viewprojects', authMiddleware,  async (req, res) => {
+router.get('/viewprojects', authMiddleware, async (req, res) => {
+   try {
    const projects = await projectModel.find()
    const i = 1
    res.render('admin/viewprojects', { projects, i })
+   } catch (e) {
+      console.log(e)
+   }
+   
 })
 
 // Let edit project
 router.get('/editproject/:id', authMiddleware, async (req, res) => {
-   const editProject = await projectModel.findById(req.params.id)
-   res.render('admin/editproject', {
-      editProject,
-      errorsMsg: req.session.errorsMsg,
-      multerErr: req.session.multerErr,
-      message: req.session.success,
-      erroCancels: req.session.success = null,
-      erroCan: req.session.errorsMsg = null,
-      erroCancel: req.session.multerErr = null
-     
-   })
+
+   try {
+        const editProject = await projectModel.findById(req.params.id)
+        res.render('admin/editproject', {
+           editProject,
+           errorsMsg: req.session.errorsMsg,
+           multerErr: req.session.multerErr,
+           message: req.session.success,
+           erroCancels: req.session.success = null,
+           erroCan: req.session.errorsMsg = null,
+           erroCancel: req.session.multerErr = null
+
+        })
+   } catch (e) {
+      console.log(e)
+   }
+
 })
 
 // Let delete post

@@ -40,9 +40,14 @@ router.post('/', authMiddleware, userValidate, async (req, res) => {
 })
 
 router.get('/login', async (req, res) => {
-   res.render('admin/login', {
-       message: await req.consumeFlash('info')
-   })
+    try {
+    res.render('admin/login', {
+        message: await req.consumeFlash('info')
+    })
+    } catch (e) {
+        console.log(e)
+    }
+   
 })
 
 
@@ -74,9 +79,14 @@ router.post('/login', async (req, res) => {
 
 // let loopout users
 router.get('/viewusers', authMiddleware, async (req, res) => {
+    try {
     const users = await userModel.find()
     const i = 1
     res.render('admin/viewusers', { users, i })
+    } catch (e) {
+        console.log(e)
+    }
+ 
 })
 
 // Logout route

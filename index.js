@@ -63,14 +63,16 @@ app.get('/', async (req, res) => {
  
 })
 
-const emailValidate = [
-
-]
 // Let send sms 
-app.post('/sms',  async (req, res) => {
+app.post('/sms', async (req, res) => {
+    try {
     const { email, name, subject, desc } = req.body
     await contactMail(email, name, subject, desc)
-    res.redirect('back')
+    res.redirect('back')  
+    } catch (e) {
+        console.log(e)
+    }
+   
 })
 
 
