@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator')
 const userValidate = require('../validations/userValidate')
 const userModel = require('../models/userModel')
 const jwt = require('jsonwebtoken')
-const { authMiddleware, userDetails, getUser } = require('../middlewares/authMiddleware')
+const { authMiddleware, userDetails, getUser, loginCntAccess } = require('../middlewares/authMiddleware')
 const flashMsg = require('../middlewares/flashMsg')
 const sendMail = require('../middlewares/email')
 const bcrypt = require('bcrypt')
@@ -39,7 +39,7 @@ router.post('/', authMiddleware, userValidate, async (req, res) => {
   }
 })
 
-router.get('/login', async (req, res) => {
+router.get('/login', loginCntAccess, async (req, res) => {
     try {
     res.render('admin/login', {
         message: await req.consumeFlash('info')
@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
         if (user) {
             const token = createToken(user._id)
             res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-           return res.redirect('/user')
+           return res.redirect('/admin')
        }
     } catch (err) {
          await req.flash('info', 'Invalid Username or Password')

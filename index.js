@@ -10,7 +10,18 @@ const cookieParser = require('cookie-parser')
 const { authMiddleware, userDetails, getUser } = require('./middlewares/authMiddleware')
 const projectModel = require('./models/projectModel')
 const contactMail = require('./middlewares/contactMail')
+const MongoDBStore = require('connect-mongodb-session')(session)
 const port = process.env.PORT || 5000
+
+
+var store = new MongoDBStore({
+    uri: process.env.DB_HOST,
+    collection: 'mySessions'
+});
+
+store.on('error', function (error) {
+    console.log(error);
+});
 
 // Middlewares
 // Let set session here
@@ -19,6 +30,7 @@ const sess = {
     resave: false,
     saveUninitialized: true,
     cookie: {},
+    store,
 };
 
 if (app.get("env") === "production") {
