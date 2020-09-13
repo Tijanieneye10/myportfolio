@@ -79,7 +79,7 @@ app.use('/user', userRoute)
 app.get('/', async (req, res) => {
     try {
     const projects = await projectModel.find()
-    res.render('index', { projects })
+    res.render('index', { projects, success: await req.consumeFlash('success'), })
     } catch (e) {
         console.log(e)
     }
@@ -91,6 +91,7 @@ app.post('/sms', async (req, res) => {
     try {
     const { email, name, subject, desc } = req.body
     await contactMail(email, name, subject, desc)
+    await req.flash('success', 'Mail Sent successfully')
     res.redirect('back')  
     } catch (e) {
         console.log(e)
